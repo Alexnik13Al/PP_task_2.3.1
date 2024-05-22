@@ -1,15 +1,27 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
 <html lang="en">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+
 <head>
     <meta charset="UTF-8">
-    <title></title>
+    <title>Users</title>
 </head>
 <body>
-<div>
-    <th:block th:each="msg : ${messages}">
-        <h1 th:text="${msg}"></h1>
-    </th:block>
-</div>
+<table border="1" cellpadding="5">
+    <thead>
+    <tr>
+        <th>Id</th>
+        <th>Name</th>
+        <th>LastName</th>
+        <th>E-mail</th>
+    </tr>
+    </thead>
+    <tr th:each="user : ${users}">
+        <td th:utext="${user.getId()}">ID</td>
+        <td th:utext="${user.getFirstName()}">Name</td>
+        <td th:utext="${user.getLastName()}">LastName</td>
+        <td th:utext="${user.getEmail()}">Email</td>
+    </tr>
+</table>
 </body>
 </html>

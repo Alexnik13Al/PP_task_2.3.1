@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Update user</title>
+</head>
+<body><h2>Add new user</h2>
+<form th:method="POST" th:action="@{/updateuser}" th:object="${user}">
+
+  <input hidden="hidden" type="number" th:field="*{id}" id="idAdd">
+  <label for="firstNameUpdate">Name</label>
+  <input type="text" th:field="*{firstName}" id="firstNameUpdate">
+  <p style="color: red" th:if="${#fields.hasErrors('firstName')}" th:errors="*{firstName}">
+    Incorrect name
+  </p>
+  <br>
+  <label for="lastNameUpdate">LastName</label>
+  <input type="text" th:field="*{lastName}" id="lastNameUpdate">
+  <p style="color: red" th:if="${#fields.hasErrors('lastName')}" th:errors="*{lastName}">
+    Incorrect last name
+  </p>
+  <br>
+  <label for="emailUpdate">Email</label>
+  <input type="text" th:field="*{email}" id="emailUpdate">
+  <p style="color: red" th:if="${#fields.hasErrors('email')}" th:errors="*{email}">
+    Incorrect email
+  </p>
+  <br>
+  <input type="submit" value="Update User">
+</form>
+</body>
+</html>
