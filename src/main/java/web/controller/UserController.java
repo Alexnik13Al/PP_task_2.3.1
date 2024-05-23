@@ -3,18 +3,18 @@ package web.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import web.model.User;
 import web.service.UserService;
 
+import javax.validation.Valid;
+
 @Controller
+
 public class UserController {
 
-    private UserService userService;
+    private final UserService userService;
 
     @Autowired
     public UserController(UserService userService) {
@@ -22,13 +22,18 @@ public class UserController {
     }
 
     @GetMapping("/")
-    public String getAllUsers(ModelMap model) {
+    public String getAllUsers(Model model) {
         model.addAttribute("users", userService.getAllUsers());
-        return "user";
+        return "index";
     }
 
     @GetMapping("/adduser")
-    public String addUser(@ModelAttribute("user") User user, BindingResult bindingResult) {
+    public String CreateUserForm(@ModelAttribute("user") User user) {
+        return "adduser";
+    }
+
+    @PostMapping("/adduser")
+    public String addUser(@ModelAttribute("user") @Valid User user, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
             return "adduser";
         }
@@ -38,19 +43,18 @@ public class UserController {
 
     @GetMapping("/deleteuser")
     public String deleteUser(@RequestParam("id") Long id) {
-        User user = userService.getUser(id);
-        userService.deleteUser(user);
+        userService.deleteUser(id);
         return "redirect:/";
     }
 
-    @GetMapping("updateeser")
+    @GetMapping("/updateuser")
     public String getEditUserFrom(Model model, @RequestParam("id") Long id) {
         model.addAttribute("user", userService.getUser(id));
         return "updateuser";
     }
 
-    @GetMapping("/updateuser")
-    public String updateUser(@ModelAttribute("user") User user, BindingResult bindingResult) {
+    @PostMapping("/updateuser")
+    public String updateUser(@ModelAttribute("user") @Valid  User user, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
             return "updateuser";
         }
